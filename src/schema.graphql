@@ -1,10 +1,21 @@
+# expoe somente os endpoints necessarios
+
 type Query {
   user(id: ID!): User
+}
+
+type Mutation {
+  signin(email: String!, password: String!): AuthPayload
+  signup(email: String!, password: String!, name: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 type User {
   id: ID!
   name: String!
   email: String!
-  password: String!
 }
