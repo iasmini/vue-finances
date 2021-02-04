@@ -1,11 +1,15 @@
 {
   "dependencies": {
     "graphql-yoga": "1.17.4",
+    "prisma": "1.28",
     "prisma-client-lib": "1.28.3"
   },
   "name": "vue-finances",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "repository": "https://github.com/iasmini/vue-finances.git",
   "author": "iasmini <iasmini@silexsistemas.com.br>",
   "license": "MIT"
