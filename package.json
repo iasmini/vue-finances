@@ -8,9 +8,13 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
+    "dev": "npx nodemon --delay 1000ms --ext js,graphql src/index.js",
     "start": "node src/index.js"
   },
   "repository": "https://github.com/iasmini/vue-finances.git",
   "author": "iasmini <iasmini@silexsistemas.com.br>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "1.18.10"
+  }
 }
