@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "prisma": "1.28",
+    "graphql-yoga": "1.17.4",
     "prisma-client-lib": "1.28.3"
   },
   "name": "vue-finances",
