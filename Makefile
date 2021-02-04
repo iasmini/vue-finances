@@ -1,3 +1,6 @@
+build:
+	docker-compose build api
+
 restart: stop run
 
 run:
