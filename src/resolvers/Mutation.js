@@ -3,6 +3,24 @@ const jwt = require('jsonwebtoken')
 
 const JWT_SECRET = process.env.JWT_SECRET
 
+async function signin(parent, {email, password}, ctx, info){
+  const user = await ctx.db.query.user({ where: {email} })
+  if (!user){
+    throw new Error(`Não foi encontrado usuário para o e-mail ${email}.`)
+  }
+
+  // verifica se a senha estah valida
+  const validPassword = await bcrypt.compare(password, user.password)
+
+  if (!validPassword){
+    throw new Error('Senha inválida.')
+  }
+
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '2h' })
+
+  return { token, user }
+}
+
 async function signup(parent, args, ctx, info){
   // 10 - nr que serah passado para o bcrypt para fazer duplo hash
   const password = await bcrypt.hash(args.password, 10)
@@ -15,6 +33,4 @@ async function signup(parent, args, ctx, info){
   return { token, user }
 }
 
-module.exports = {
-  signup
-}
+module.exports = {signin, signup}
