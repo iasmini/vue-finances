@@ -30,6 +30,29 @@ function createCategory(parent, {name, kind}, ctx, info){
   }, info)
 }
 
+function createEntry(parent, args, ctx, info){
+  const userId = getUserId(ctx)
+  return ctx.db.mutation.createEntry({
+    data: {
+      user: {
+        connect: {id: userId}
+      },
+      account: {
+        connect: {id: args.accountId}
+      },
+      category: {
+        connect: {id: args.categoryId}
+      },
+      amount: args.amount,
+      kind: args.kind,
+      due_date: args.due_date,
+      description: args.description,
+      tags: args.tags,
+      notes: args.notes
+    }
+  }, info)
+}
+
 async function signin(parent, {email, password}, ctx, info){
   const user = await ctx.db.query.user({ where: {email} })
   if (!user){
@@ -63,5 +86,6 @@ async function signup(parent, args, ctx, info){
 module.exports = {
   createAccount,
   createCategory,
+  createEntry,
   signin,
   signup}

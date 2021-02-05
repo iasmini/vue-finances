@@ -1,5 +1,7 @@
 # expoe somente os endpoints necessarios
 
+scalar Date
+
 type Query {
   accounts: [Account!]!
   categories(kind: Kind): [Category!]!
@@ -9,6 +11,16 @@ type Query {
 type Mutation {
   createAccount(name: String!): Account!
   createCategory(name: String!, kind:Kind!): Category!
+  createEntry(
+    accountId: ID!
+    categoryId: ID!
+    amount: Float!
+    kind: Kind!
+    due_date: Date! # 2021-10-15
+    description: String!
+    tags: String
+    notes: String
+  ): Entry!
   signin(email: String!, password: String!): AuthPayload
   signup(email: String!, password: String!, name: String!): AuthPayload
 }
@@ -40,4 +52,17 @@ type Category {
   user: User
   name: String!
   kind: Kind!
+}
+
+type Entry {
+  id: ID!
+  user: User!
+  account: Account!
+  category: Category!
+  amount: Float!
+  kind: Kind!
+  due_date: Date! # 2021-10-15
+  description: String!
+  tags: String
+  notes: String
 }
