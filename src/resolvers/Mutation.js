@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const moment = require('moment')
 
 const { getUserId } = require('./../utils')
 
@@ -31,6 +32,10 @@ function createCategory(parent, {name, kind}, ctx, info){
 }
 
 function createEntry(parent, args, ctx, info){
+  const due_date = moment(args.due_date)
+  if (!due_date.isValid()){
+    throw new Error('Data de vencimento inválida.')
+  }
   const userId = getUserId(ctx)
   return ctx.db.mutation.createEntry({
     data: {
