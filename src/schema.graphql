@@ -5,6 +5,15 @@ scalar Date
 type Query {
   accounts: [Account!]!
   categories(kind: Kind): [Category!]!
+  entries(
+    kind: Kind,
+    """
+     Format: mm-yyyy
+    """
+    month: String,
+    accountsIds: [ID!],
+    categoriesIds: [ID!],
+  ): [Entry!]!
   user: User
 }
 
