@@ -4,10 +4,20 @@
       <v-flex xs12 sm6 m4 lg4 xl4>
         <v-card elevation="12">
           <v-toolbar color="primary" dark>
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Criar conta</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
+              <v-text-field
+                prepend-icon="person"
+                name="name"
+                label="Nome"
+                type="text"
+                :error-messages="nameErrors"
+                :success="!$v.user.name.$invalid"
+                v-model.trim="$v.user.name.$model"
+              >
+              </v-text-field>
               <!-- mantém a cor verde depois que sair do campo -->
               <!-- :success="!$v.user.email.$invalid"-->
               <v-text-field
@@ -40,11 +50,11 @@
               depressed
               large
               @click="submit"
-            >Entrar</v-btn>
+            >Criar conta</v-btn>
           </v-card-actions>
 
           <p class="text-right ma-2 pa-2">
-            Ainda não tem uma conta? <router-link to="/signup">Cadastre-se</router-link>.
+            Já tem uma conta? Faça o <router-link to="/login">login</router-link>.
           </p>
         </v-card>
       </v-flex>
@@ -56,16 +66,19 @@
 import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
-  name: 'Login',
+  name: 'Signup',
   data: () => ({
-    isLogin: true,
     user: {
+      name: '',
       email: '',
       password: ''
     }
   }),
   validations: {
     user: {
+      name: {
+        required
+      },
       email: {
         required,
         email
@@ -77,6 +90,13 @@ export default {
     }
   },
   computed: {
+    nameErrors () {
+      const errors = []
+      const name = this.$v.user.name
+      if (!name.$dirty) { return errors }
+      !name.required && errors.push('O nome é obrigatório.')
+      return errors
+    },
     emailErrors () {
       const errors = []
       const email = this.$v.user.email

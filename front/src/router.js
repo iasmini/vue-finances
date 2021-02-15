@@ -10,6 +10,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     ...authRoutes,
-    { path: '', redirect: '/login' }
+    { path: '', redirect: '/login' },
+    { path: '/signup', redirect: '/signup' },
   ]
 })
