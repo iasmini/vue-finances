@@ -8,11 +8,15 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
+              <!-- mantém a cor verde depois que sair do campo -->
+              <!-- :success="!$v.user.email.$invalid"-->
               <v-text-field
                 prepend-icon="email"
                 name="email"
                 label="E-mail"
                 type="email"
+                :error-messages="emailErrors"
+                :success="!$v.user.email.$invalid"
                 v-model.trim="$v.user.email.$model"
               >
               </v-text-field>
@@ -21,6 +25,8 @@
                 name="password"
                 label="Senha"
                 type="password"
+                :error-messages="passwordErrors"
+                :success="!$v.user.password.$invalid"
                 v-model.trim="$v.user.password.$model"
               >
               </v-text-field>
@@ -68,6 +74,24 @@ export default {
         required,
         minLength: minLength(1)
       }
+    }
+  },
+  computed: {
+    emailErrors () {
+      const errors = []
+      const email = this.$v.user.email
+      if (!email.$dirty) { return errors }
+      !email.required && errors.push('O e-mail é obrigatório.')
+      !email.email && errors.push('Insira um e-mail válido.')
+      return errors
+    },
+    passwordErrors () {
+      const errors = []
+      const password = this.$v.user.password
+      if (!password.$dirty) { return errors }
+      !password.required && errors.push('A senha é obrigatória.')
+      !password.minLength && errors.push(`Insira pelo menos ${password.$params.minLength.min} caracteres.`)
+      return errors
     }
   },
   methods: {
