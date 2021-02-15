@@ -13,6 +13,7 @@
                 name="email"
                 label="E-mail"
                 type="email"
+                v-model.trim="$v.user.email.$model"
               >
               </v-text-field>
               <v-text-field
@@ -20,6 +21,7 @@
                 name="password"
                 label="Senha"
                 type="password"
+                v-model.trim="$v.user.password.$model"
               >
               </v-text-field>
               <v-btn
@@ -32,7 +34,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" large>Login</v-btn>
+            <v-btn
+              :disabled="$v.$invalid"
+              color="primary"
+              large
+              @click="submit"
+            >Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -41,7 +48,32 @@
 </template>
 
 <script>
+import { required, email, minLength } from 'vuelidate/lib/validators'
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data: () => ({
+    user: {
+      email: '',
+      password: ''
+    }
+  }),
+  validations: {
+    user: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(1)
+      }
+    }
+  },
+  methods: {
+    submit () {
+      console.log('user: ', this.usage)
+    }
+  }
 }
 </script>

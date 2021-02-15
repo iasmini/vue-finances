@@ -13,6 +13,7 @@
     "roboto-fontface": "*",
     "vue": "^2",
     "vue-router": "^3.0.3",
+    "vuelidate": "0",
     "vuetify": "^2.4.0",
     "vuex": "^3"
   },
