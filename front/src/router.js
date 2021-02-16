@@ -11,6 +11,6 @@ export default new Router({
   routes: [
     ...authRoutes,
     { path: '', redirect: '/login' },
-    { path: '/signup', redirect: '/signup' },
+    { path: '/signup', redirect: '/signup' }
   ]
 })
