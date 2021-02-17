@@ -54,7 +54,7 @@
           </v-card-actions>
 
           <p class="text-right ma-2 pa-2">
-            Já tem uma conta? Faça o <router-link to="/login">login</router-link>.
+            Já tem uma conta? Faça o <router-link to="/signin">signin</router-link>.
           </p>
         </v-card>
       </v-flex>

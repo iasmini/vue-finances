@@ -4,7 +4,7 @@
       <v-flex xs12 sm6 m4 lg4 xl4>
         <v-card elevation="12">
           <v-toolbar color="primary" dark>
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Sign in</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>
@@ -54,11 +54,11 @@
 
 <script>
 import { required, email, minLength } from 'vuelidate/lib/validators'
+import AuthService from './../services/auth-service'
 
 export default {
-  name: 'Login',
+  name: 'Signin',
   data: () => ({
-    isLogin: true,
     user: {
       email: '',
       password: ''
@@ -95,8 +95,10 @@ export default {
     }
   },
   methods: {
-    submit () {
-      console.log('user: ', this.usage)
+    async submit () {
+      console.log('user: ', this.user)
+      const authData = await AuthService.signin(this.user)
+      console.log('authData: ', authData)
     }
   }
 }

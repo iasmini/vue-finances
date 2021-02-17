@@ -1,7 +1,7 @@
-const Login = () => import('./../views/Login')
+const Signin = () => import('../views/Signin')
 const Signup = () => import('./../views/Signup')
 
 export default [
-  { path: '/login', component: Login },
+  { path: '/signin', component: Signin },
   { path: '/signup', component: Signup }
 ]

@@ -1,17 +1,20 @@
-import apolo from '@/plugins/apollo'
+// para fazer import de exports nomeados tem q colocar entre chaves
+import apollo, { onSignin } from '@/plugins/apollo'
 
-import loginMutation from '@/modules/auth/views/Login'
+import SigninMutation from '../graphql/Signin.graphql'
 
 // quando a funcao tem um argumento só, podem ser omitidos os parenteses
-const login = async (email, password) => {
-  const response = await apolo.mutate({
-    mutation: loginMutation,
-    email,
-    password
+const signin = async variables => {
+  const response = await apollo.mutate({
+    mutation: SigninMutation,
+    variables
   })
-  return response.data.login()
+  const { signin } = response.data
+  // usa o await para aguardar a resposta do reset do apollo
+  await onSignin(apollo, signin.token)
+  return signin
 }
 
 export default {
-  login
+  signin
 }

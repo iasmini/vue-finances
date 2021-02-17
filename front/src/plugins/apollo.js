@@ -1,7 +1,25 @@
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 
+const AUTH_TOKEN = 'apollo-token'
+
+const resetApolloClient = async (apollo) => {
+  try {
+    await apollo.resetStore()
+  } catch (e) {
+    // %c para aplicar css
+    console.log('%cError on cache reset', 'color: orange;', e.message)
+  }
+}
+
+const onSignin = async (apollo, token) => {
+  if (typeof window.localStorage !== 'undefined' && token) {
+    window.localStorage.setItem(AUTH_TOKEN, token)
+  }
+  await resetApolloClient(apollo)
+}
+
 const link = new HttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'http://localhost:4000/'
 })
 
 const apollo = new ApolloClient({
@@ -11,3 +29,5 @@ const apollo = new ApolloClient({
 })
 
 export default apollo
+
+export { AUTH_TOKEN, onSignin }
