@@ -96,7 +96,6 @@ export default {
   },
   methods: {
     async submit () {
-      console.log('user: ', this.user)
       const authData = await AuthService.signin(this.user)
       console.log('authData: ', authData)
     }

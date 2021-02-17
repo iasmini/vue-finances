@@ -2,6 +2,7 @@
 import apollo, { onSignin } from '@/plugins/apollo'
 
 import SigninMutation from '../graphql/Signin.graphql'
+import SignupMutation from '../graphql/Signup.graphql'
 
 // quando a funcao tem um argumento só, podem ser omitidos os parenteses
 const signin = async variables => {
@@ -15,6 +16,18 @@ const signin = async variables => {
   return signin
 }
 
+const signup = async (variables) => {
+  const response = await apollo.mutate({
+    mutation: SignupMutation,
+    variables
+  })
+  const { signup } = response.data
+  // usa o await para aguardar a resposta do reset do apollo
+  await onSignin(apollo, signup.token)
+  return signup
+}
+
 export default {
-  signin
+  signin,
+  signup
 }
