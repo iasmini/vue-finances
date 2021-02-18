@@ -16,6 +16,7 @@
 
           <v-toolbar
             color="primary"
+            dark
           >
             <v-toolbar-title>{{ texts.toolbar }}</v-toolbar-title>
             <v-spacer></v-spacer>
