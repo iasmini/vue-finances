@@ -181,7 +181,8 @@ export default {
         this.isSignin
           ? await AuthService.signin(this.user)
           : await AuthService.signup(this.user)
-        // this.$router.push(this.$route.query.redirect || '/dashboard')
+        // se o usuario nao esta autenticado redireciona para login e depois para dashboard
+        this.$router.push(this.$route.query.redirect || '/dashboard')
       } catch (error) {
         console.log(error)
         this.error = formatError(error.message)
