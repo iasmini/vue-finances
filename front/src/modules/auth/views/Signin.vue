@@ -16,7 +16,6 @@
 
           <v-toolbar
             color="primary"
-            dark
           >
             <v-toolbar-title>{{ texts.toolbar }}</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -62,7 +61,6 @@
             <v-btn
               block
               depressed
-              color="secondary"
               @click="isSignin = !isSignin"
             >
               {{ texts.button }}
@@ -83,15 +81,14 @@
             v-model="showSnackbar"
             top
           >
-            {{ error }}
             <v-btn
-              color="pink"
               flat
               icon
               @click="showSnackbar = false"
             >
               <v-icon>close</v-icon>
             </v-btn>
+            {{ error }}
           </v-snackbar>
 
         </v-card>
@@ -105,7 +102,7 @@
 
 import { required, email, minLength } from 'vuelidate/lib/validators'
 import AuthService from './../services/auth-service'
-// import { formatError } from '@/utils'
+import { formatError } from '@/utils'
 
 export default {
   name: 'Signin',
@@ -156,7 +153,7 @@ export default {
       const errors = []
       const name = this.$v.user.name
       if (!name.$dirty) { return errors }
-      !name.required && errors.push('Nome é obrigatório!')
+      !name.required && errors.push('O nome é obrigatório!')
       !name.minLength && errors.push(`Insira pelo menos ${name.$params.minLength.min} caracteres!`)
       return errors
     },
@@ -164,15 +161,15 @@ export default {
       const errors = []
       const email = this.$v.user.email
       if (!email.$dirty) { return errors }
-      !email.required && errors.push('Email é obrigatório!')
-      !email.email && errors.push('Insira um email válido!')
+      !email.required && errors.push('O e-mail é obrigatório!')
+      !email.email && errors.push('Insira um e-mail válido!')
       return errors
     },
     passwordErrors () {
       const errors = []
       const password = this.$v.user.password
       if (!password.$dirty) { return errors }
-      !password.required && errors.push('Senha é obrigatória!')
+      !password.required && errors.push('A senha é obrigatória!')
       !password.minLength && errors.push(`Insira pelo menos ${password.$params.minLength.min} caracteres!`)
       return errors
     }
@@ -187,7 +184,7 @@ export default {
         // this.$router.push(this.$route.query.redirect || '/dashboard')
       } catch (error) {
         console.log(error)
-        // this.error = formatError(error.message)
+        this.error = formatError(error.message)
         this.showSnackbar = true
       } finally {
         this.isLoading = false
