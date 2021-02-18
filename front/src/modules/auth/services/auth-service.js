@@ -3,6 +3,7 @@ import apollo, { onSignin } from '@/plugins/apollo'
 
 import SigninMutation from '../graphql/Signin.graphql'
 import SignupMutation from '../graphql/Signup.graphql'
+import UserMutation from '../graphql/User.graphql'
 
 // quando a funcao tem um argumento só, podem ser omitidos os parenteses
 const signin = async variables => {
@@ -27,7 +28,16 @@ const signup = async (variables) => {
   return signup
 }
 
+const user = async (options = {}) => {
+  const response = await apollo.query({
+    query: UserMutation,
+    ...options
+  })
+  return response.data.user
+}
+
 export default {
   signin,
-  signup
+  signup,
+  user
 }

@@ -1,4 +1,4 @@
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from 'apollo-boost'
 
 const AUTH_TOKEN = 'apollo-token'
 
@@ -22,8 +22,20 @@ const link = new HttpLink({
   uri: 'http://localhost:4000/'
 })
 
+// intercepta a requisicao e adiciona no header o token para autenticacao nas rotas que necessitam
+const authLink = new ApolloLink((operation, forward) => {
+  const { headers } = operation.getContext()
+  operation.setContext({
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${window.localStorage.getItem(AUTH_TOKEN)}`
+    }
+  })
+  return forward(operation)
+})
+
 const apollo = new ApolloClient({
-  link,
+  link: ApolloLink.from([authLink, link]),
   cache: new InMemoryCache(),
   connectToDevTools: process.env.NODE_ENV !== 'production'
 })
