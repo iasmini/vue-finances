@@ -21,7 +21,23 @@ const formatError = message => {
   return messageSplit[messageSplit.length - 1].trim()
 }
 
+// funcao para agrupar valores por uma determinada chave
+const groupBy = (array, key, makeCurrentKey) => {
+  return array.reduce((accumulated, item) => {
+    const currentKey = makeCurrentKey(item, key)
+    return {
+      ...accumulated,
+      [currentKey]: [
+        ...(accumulated[currentKey] || []),
+        item
+      ]
+    }
+  }, {})
+}
+
 export {
   currencyFormater,
   errorHandler,
-  formatError }
+  formatError,
+  groupBy
+}
