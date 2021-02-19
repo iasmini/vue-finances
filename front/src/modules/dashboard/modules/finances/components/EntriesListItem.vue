@@ -1,7 +1,6 @@
 <template>
   <v-list-item>
     <v-list-item-avatar>
-<!--      <v-icon color="" :class="[entryIconColor(entry.kind), 'lighten-1 white&#45;&#45;text']">{{ entryIcon(entry.kind) }}</v-icon>-->
       <v-icon :color="entryIconColor(entry.kind)" :class="['lighten-1 white--text']">{{ entryIcon(entry.kind) }}</v-icon>
     </v-list-item-avatar>
     <v-list-item-content>
@@ -9,13 +8,16 @@
       <v-list-item-subtitle>{{ entry.category.name }} | {{ entry.account.name }}</v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-action>
-      <span :class="amountColor(entry.kind)">{{ entry.amount }}</span>
+      <span :class="amountColor(entry.kind)">{{ formatCurrency(entry.amount) }}</span>
     </v-list-item-action>
   </v-list-item>
 </template>
 <script>
+import formatCurrencyMixin from '@/mixins/format-currency'
+
 export default {
   name: 'EntriesListItem',
+  mixins: [formatCurrencyMixin],
   props: {
     entry: Object
   },

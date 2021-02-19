@@ -1,3 +1,10 @@
+const currencyFormater = ({ locale, currency } = { locale: 'pt-BR', currency: 'BRL' }) => {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency
+  })
+}
+
 const errorHandler = (error, vm, info) => {
   console.log('Vue [error hanler]: ', error, info)
   const jwtErrors = ['jwt malformed', 'jwt expired', 'jwt not active', 'invalid token']
@@ -14,4 +21,7 @@ const formatError = message => {
   return messageSplit[messageSplit.length - 1].trim()
 }
 
-export { errorHandler, formatError }
+export {
+  currencyFormater,
+  errorHandler,
+  formatError }
