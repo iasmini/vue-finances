@@ -1,5 +1,7 @@
 <template>
-  <AppLayout />
+  <AppLayout>
+    <router-view />
+  </AppLayout>
 </template>
 <script>
 import AppLayout from '@/modules/dashboard/components/AppLayout'

@@ -1,8 +1,7 @@
+import financesRoute from './../modules/finances/router'
+
 const Dashboard = () => import('./../views/Dashboard')
 
 export default [
-  { path: '/dashboard',
-    component: Dashboard,
-    meta: { requiresAuth: true }
-  }
+  { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true }, children: [...financesRoute] }
 ]

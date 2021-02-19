@@ -1,0 +1,36 @@
+# import * from './Kind.graphql'
+
+query EntriesByMonth (
+  $month: String,
+  $kind: Kind,
+  $accountsIds: [ID!],
+  $categoriesIds: [ID!],
+) {
+  entries(
+    month: $month,
+    kind: $kind,
+    accountsIds: $accountsIds,
+    categoriesIds: $categoriesIds
+  ) {
+    id
+    due_date
+    description
+    amount
+    kind
+    notes
+    tags
+    account {
+      id
+      name
+    }
+    category {
+      id
+      name
+      kind
+    }
+    user {
+      id
+      name
+    }
+  }
+}
