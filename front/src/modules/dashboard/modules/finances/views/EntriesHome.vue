@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h1>Lançamentos</h1>
-    <EntriesList />
-  </div>
+  <EntriesList />
 </template>
 <script>
 import EntriesList from '../components/EntriesList'

@@ -1,37 +1,42 @@
 <template>
-  <v-card>
-    <v-list two-line subheader>
-      <template v-for="(groupedEntries, dueDateKey, index) in mappedEntries">
-        <v-subheader :key="dueDateKey">{{ dueDateKey }}</v-subheader>
-        <EntriesListItem v-for="entry in groupedEntries" :key="entry.id" :entry="entry"/>
-        <v-divider
-          :key="`${dueDateKey}-${index}`"
-          v-if="showDivider(index, mappedEntries)"
-        ></v-divider>
-      </template>
-    </v-list>
-    <v-footer class="pa-2">
-      <v-flex offset-xs9>
-        <h3 class="font-weight-light text-right">
-          <span>Saldo do mês:</span>
-          <strong :class="[amountColor(totalAmount), 'ml-16']">{{ formatCurrency(totalAmount) }}</strong>
-        </h3>
-      </v-flex>
-    </v-footer>
-  </v-card>
+  <div>
+    <ToolbarByMonth />
+    <v-card>
+      <v-list two-line subheader>
+        <template v-for="(groupedEntries, dueDateKey, index) in mappedEntries">
+          <v-subheader :key="dueDateKey">{{ dueDateKey }}</v-subheader>
+          <EntriesListItem v-for="entry in groupedEntries" :key="entry.id" :entry="entry"/>
+          <v-divider
+            :key="`${dueDateKey}-${index}`"
+            v-if="showDivider(index, mappedEntries)"
+          ></v-divider>
+        </template>
+      </v-list>
+      <v-footer class="pa-2">
+        <v-flex offset-xs9>
+          <h3 class="font-weight-light text-right">
+            <span>Saldo do mês:</span>
+            <strong :class="[amountColor(totalAmount), 'ml-16']">{{ formatCurrency(totalAmount) }}</strong>
+          </h3>
+        </v-flex>
+      </v-footer>
+    </v-card>
+  </div>
 </template>
 <script>
 import moment from 'moment'
 
 import EntriesListItem from './EntriesListItem'
 import EntriesService from '../services/entries-service'
+import ToolbarByMonth from './ToolbarByMonth'
 import formatCurrency from '@/mixins/format-currency'
 import { groupBy } from '@/utils'
 
 export default {
   name: 'EntriesList',
   components: {
-    EntriesListItem
+    EntriesListItem,
+    ToolbarByMonth
   },
   data: () => ({
     entries: []
