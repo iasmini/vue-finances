@@ -83,7 +83,6 @@
             top
           >
             <v-btn
-              flat
               icon
               @click="showSnackbar = false"
             >

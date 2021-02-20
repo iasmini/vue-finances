@@ -1,6 +1,10 @@
 <template>
   <div>
-    <ToolbarByMonth />
+    <ToolbarByMonth
+      class="mb-2"
+      format="MM-YYYY"
+      @monthChanged="changeMonth"
+    />
     <v-card>
       <v-list two-line subheader>
         <template v-for="(groupedEntries, dueDateKey, index) in mappedEntries">
@@ -52,8 +56,15 @@ export default {
     }
   },
   methods: {
+    changeMonth (month) {
+      console.log('mes: ', month)
+      this.selectEntriesByMonth(month)
+    },
     amountColor (amount) {
       return amount < 0 ? 'error--text text-lighten-1' : 'primary--text text-lighten-1'
+    },
+    async selectEntriesByMonth (month) {
+      this.entries = await EntriesService.entries({ month })
     },
     showDivider (index, object) {
       // funcao para esconder o ultimo divider da lista
@@ -62,9 +73,6 @@ export default {
   },
   mixins: [
     formatCurrency
-  ],
-  async created () {
-    this.entries = await EntriesService.entries()
-  }
+  ]
 }
 </script>
